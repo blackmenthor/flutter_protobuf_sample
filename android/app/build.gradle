@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.protobuf'
 
 android {
     compileSdkVersion flutter.compileSdkVersion
@@ -40,6 +41,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        main.java.srcDirs += "${protobuf.generatedFilesBaseDir}/main/javalite"
     }
 
     defaultConfig {
@@ -66,6 +68,42 @@ flutter {
     source '../..'
 }
 
+protobuf {
+    protoc {
+        // You still need protoc like in the non-Android case
+        // for apple m1, add protoc_platform=osx-x86_64 in $HOME/.gradle/gradle.properties
+        if (project.hasProperty('protoc_platform')) {
+            artifact = "com.google.protobuf:protoc:3.9.2:${protoc_platform}"
+        } else {
+            artifact = "com.google.protobuf:protoc:3.9.2"
+        }
+    }
+    plugins {
+        javalite {
+            // The codegen for lite comes as a separate artifact
+            if (project.hasProperty('protoc_platform')) {
+                artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0:${protoc_platform}"
+            } else {
+                artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
+            }
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                // In most cases you don't need the full Java output
+                // if you use the lite output.
+                remove java
+            }
+            task.plugins {
+                javalite { }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.protobuf:protobuf-lite:3.0.0'
+
 }

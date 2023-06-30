@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_protobuf_sample/connections/json_page.dart';
+import 'package:flutter_protobuf_sample/connections/method_channel_page.dart';
 import 'package:flutter_protobuf_sample/connections/protobuf_page.dart';
 import 'package:flutter_protobuf_sample/connections/xml_page.dart';
 
@@ -83,6 +84,30 @@ class MyHomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const ProtobufPage(),
+                    ),
+                  );
+                },
+              ),
+              _buildButton(
+                context: context,
+                title: 'Method Channel',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MethodChannelPage(),
+                    ),
+                  );
+                },
+              ),
+              _buildButton(
+                context: context,
+                title: 'Local Data',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MethodChannelPage(),
                     ),
                   );
                 },

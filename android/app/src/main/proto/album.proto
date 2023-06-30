@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package publish;
+option go_package  = "/publish";
+
+message ListOfAlbums {
+  message Album {
+    string id = 1;
+    string title = 2;
+    string artist = 3;
+    float price = 4;
+  }
+
+  repeated Album albums = 1;
+}
