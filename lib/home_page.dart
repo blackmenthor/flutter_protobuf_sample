@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_protobuf_sample/connections/json_page.dart';
+import 'package:flutter_protobuf_sample/connections/local_data_json_page.dart';
+import 'package:flutter_protobuf_sample/connections/local_data_page.dart';
 import 'package:flutter_protobuf_sample/connections/method_channel_page.dart';
 import 'package:flutter_protobuf_sample/connections/method_channel_pigeon_page.dart';
 import 'package:flutter_protobuf_sample/connections/protobuf_page.dart';
@@ -108,7 +110,7 @@ class MyHomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MethodChannelPage(),
+                      builder: (context) => const LocalDataPage(),
                     ),
                   );
                 },
@@ -121,6 +123,18 @@ class MyHomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const MethodChannelPigeonPage(),
+                    ),
+                  );
+                },
+              ),
+              _buildButton(
+                context: context,
+                title: 'Local Data Json',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LocalDataJsonPage(),
                     ),
                   );
                 },

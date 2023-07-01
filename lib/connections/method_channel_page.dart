@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_protobuf_sample/gen_protos/protos/album.pb.dart';
 import 'package:flutter_protobuf_sample/models/album.dart';
-import 'package:flutter_protobuf_sample/utils.dart';
 
 class MethodChannelPage extends StatefulWidget {
   const MethodChannelPage({
@@ -107,13 +106,6 @@ class _MethodChannelPageState extends State<MethodChannelPage> {
                       color: Colors.white,
                     ),
                   ),
-                  Text(
-                    'Response size: ${_dataSizeInBytes!
-                        .toByte(2)} bytes',
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -147,7 +139,7 @@ class _MethodChannelPageState extends State<MethodChannelPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'JSON page',
+          'Method Channel w/ Protobuf page',
         ),
       ),
       body: _buildBody(context),

@@ -91,13 +91,6 @@ class _MethodChannelPigeonPageState extends State<MethodChannelPigeonPage> {
                       color: Colors.white,
                     ),
                   ),
-                  Text(
-                    'Response size: ${_dataSizeInBytes!
-                        .toByte(2)} bytes',
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -131,7 +124,7 @@ class _MethodChannelPigeonPageState extends State<MethodChannelPigeonPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'JSON page',
+          'Method Channel w/ Pigeon page',
         ),
       ),
       body: _buildBody(context),

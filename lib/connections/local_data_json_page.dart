@@ -6,16 +6,16 @@ import 'package:flutter_protobuf_sample/gen_protos/protos/album.pb.dart';
 import 'package:flutter_protobuf_sample/models/album.dart';
 import 'package:flutter_protobuf_sample/utils.dart';
 
-class LocalDataPage extends StatefulWidget {
-  const LocalDataPage({
+class LocalDataJsonPage extends StatefulWidget {
+  const LocalDataJsonPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<LocalDataPage> createState() => _LocalDataPageState();
+  State<LocalDataJsonPage> createState() => _LocalDataJsonPageState();
 }
 
-class _LocalDataPageState extends State<LocalDataPage> {
+class _LocalDataJsonPageState extends State<LocalDataJsonPage> {
   List<Album>? _albums;
   dynamic _error;
 
@@ -38,12 +38,11 @@ class _LocalDataPageState extends State<LocalDataPage> {
     try {
       final before = DateTime.now();
 
-      final file = await getFromFile();
-      final Uint8List result = await file.readAsBytes();
+      final file = await getJsonFromFile();
+      final String result = await file.readAsString();
 
       _dataSizeInBytes = await file.length();
-
-      final albums = ListOfAlbums.fromBuffer(result);
+      final albums = ListOfAlbums.fromJson(result);
 
       final after = DateTime.now();
       final delta = after.difference(before);
@@ -148,7 +147,7 @@ class _LocalDataPageState extends State<LocalDataPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Local File w/ Protobuf page',
+          'Local File w/ json page',
         ),
       ),
       body: _buildBody(context),

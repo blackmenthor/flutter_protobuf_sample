@@ -7,6 +7,18 @@ import 'package:flutter_protobuf_sample/home_page.dart';
 import 'package:path_provider/path_provider.dart';
 
 const fileName = 'file_01.tmp';
+const fileNameJson = 'file_02.tmp';
+
+Future<File> writeJsonToFile(ListOfAlbums data) async {
+  final json = data.writeToJson();
+  Directory tempDir = await getTemporaryDirectory();
+  String tempPath = tempDir.path;
+
+  var filePath = tempPath + fileNameJson;
+
+  return File(filePath)
+      .writeAsBytes(json.codeUnits);
+}
 
 Future<File> writeToFile(Uint8List data) async {
   final buffer = data.buffer;
@@ -19,13 +31,20 @@ Future<File> writeToFile(Uint8List data) async {
       .writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
 }
 
-Future<Uint8List> getFromFile() async {
+Future<File> getFromFile() async {
   Directory tempDir = await getTemporaryDirectory();
   String tempPath = tempDir.path;
   var filePath = tempPath + fileName;
 
-  final file = File(filePath);
-  return file.readAsBytes();
+  return File(filePath);
+}
+
+Future<File> getJsonFromFile() async {
+  Directory tempDir = await getTemporaryDirectory();
+  String tempPath = tempDir.path;
+  var filePath = tempPath + fileNameJson;
+
+  return File(filePath);
 }
 
 class MyApp extends StatefulWidget {
@@ -51,7 +70,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> _saveToFile() async {
     final albums = ListOfAlbums();
 
-    for (var i = 0; i<100; i++) {
+    for (var i = 0; i<100000; i++) {
       albums.albums.add(
         ListOfAlbums_Album(
           id: 'ID_$i',
@@ -63,6 +82,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     await writeToFile(albums.writeToBuffer());
+    await writeJsonToFile(albums);
   }
 
   @override
